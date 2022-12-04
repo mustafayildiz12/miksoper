@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyPrimaryButton extends StatelessWidget {
   const MyPrimaryButton(
@@ -24,8 +24,8 @@ class MyPrimaryButton extends StatelessWidget {
             title,
             style: TextStyle(
                 color: MyColors().colorPrimary,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w600),
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w500),
           ),
         ),
       ),

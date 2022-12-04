@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/ui/pages/auth/login_page.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ActivationSuccess extends StatefulWidget {
   const ActivationSuccess({Key? key}) : super(key: key);

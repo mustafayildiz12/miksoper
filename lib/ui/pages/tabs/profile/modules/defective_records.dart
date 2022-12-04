@@ -30,7 +30,7 @@ class _DefectiveRecordDocumentDialog extends StatelessWidget {
                   child: Text('Arıza Kayıtlarım',
                       style: TextStyle(
                           color: Theme.of(context).shadowColor,
-                          fontSize: 17.sp,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w600)),
                 ),
                 PageSizedBox.heightS(),
@@ -114,7 +114,7 @@ class _DefectiveItemCard extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       color: Theme.of(context).shadowColor,
-                      fontSize: 13.sp,
+                      fontSize: 17.sp,
                       fontWeight: FontWeight.w500)),
             ),
             PageSizedBox.heightM(),
@@ -125,13 +125,13 @@ class _DefectiveItemCard extends StatelessWidget {
                   Text("Genel",
                       style: TextStyle(
                           color: Theme.of(context).focusColor,
-                          fontSize: 11.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w400)),
                   const Spacer(),
                   Text("Çarş,25 Ekim 21,11:30",
                       style: TextStyle(
                           color: Theme.of(context).focusColor,
-                          fontSize: 11.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.w400))
                 ],
               ),

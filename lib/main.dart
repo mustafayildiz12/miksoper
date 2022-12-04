@@ -4,8 +4,8 @@ import 'package:miksoper/core/helpers/providers/file_picker_provider.dart';
 import 'package:miksoper/core/helpers/theme_style.dart';
 import 'package:miksoper/ui/pages/onboarding_page.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
+    return ResponsiveSizer(
       builder: (context, orientation, deviceType) {
         return MultiProvider(
           providers: [

@@ -18,7 +18,7 @@ class ItemInfoRowOne extends StatelessWidget {
                   .textTheme
                   .bodyLarge!
                   .copyWith(
-                      fontSize: 10.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w400),
             ),
             PageSizedBox.heightXXS(),
@@ -28,7 +28,7 @@ class ItemInfoRowOne extends StatelessWidget {
                   .textTheme
                   .bodyLarge!
                   .copyWith(
-                      fontSize: 10.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold),
             ),
           ],
@@ -42,7 +42,7 @@ class ItemInfoRowOne extends StatelessWidget {
                   .textTheme
                   .bodyLarge!
                   .copyWith(
-                      fontSize: 10.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w400),
             ),
             PageSizedBox.heightXXS(),
@@ -52,7 +52,7 @@ class ItemInfoRowOne extends StatelessWidget {
                   .textTheme
                   .bodyLarge!
                   .copyWith(
-                      fontSize: 10.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold),
             ),
           ],

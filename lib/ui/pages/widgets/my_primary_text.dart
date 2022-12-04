@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 
 class MyPrimaryText extends StatelessWidget {
@@ -12,7 +12,7 @@ class MyPrimaryText extends StatelessWidget {
       text,
       style: TextStyle(
           color: Theme.of(context).focusColor,
-          fontSize: 12.sp,
+          fontSize: 17.sp,
           fontWeight: FontWeight.bold),
     );
   }
@@ -27,7 +27,7 @@ class MyPrimaryTextThin extends StatelessWidget {
       text,
       style: TextStyle(
           color: MyColors().bluegrey_300,
-          fontSize: 12.sp,
+          fontSize: 17.sp,
           fontWeight: FontWeight.w400),
     );
   }

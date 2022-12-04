@@ -7,7 +7,7 @@ import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
 import 'package:miksoper/core/repositories/mix_life_cycle.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/repositories/image_repository.dart';
 import '../../../../core/repositories/pick_manager.dart';
@@ -88,7 +88,7 @@ class _AddPhotoPageState extends State<AddPhotoPage>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Theme.of(context).shadowColor,
-                    fontSize: 12.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w600),
               ),
             )

@@ -22,13 +22,13 @@ class _UserInfoRow extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
-                  .copyWith(fontSize: 10.sp),
+                  .copyWith(fontSize: 14.sp),
             ),
             Row(
               children: [
                 Icon(
                   Icons.location_on,
-                  size: 10.sp,
+                  size: 14.sp,
                 ),
                 PageSizedBox.widthS(),
                 Text(
@@ -36,7 +36,7 @@ class _UserInfoRow extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w400),
+                      .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w400),
                 ),
               ],
             ),

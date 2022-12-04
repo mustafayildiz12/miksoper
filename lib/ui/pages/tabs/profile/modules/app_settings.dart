@@ -178,13 +178,13 @@ class _AppSettings extends StatelessWidget {
                       Text('Diğer',
                           style: TextStyle(
                               color: Theme.of(context).shadowColor,
-                              fontSize: 12.sp,
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.w500)),
                       PageSizedBox.heightL(),
                       Text('Güvenlik',
                           style: TextStyle(
                               color: Theme.of(context).cardColor,
-                              fontSize: 10.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w400)),
                       const Divider(
                         thickness: 1,
@@ -194,7 +194,7 @@ class _AppSettings extends StatelessWidget {
                         child: Text('Yardım',
                             style: TextStyle(
                                 color: Theme.of(context).cardColor,
-                                fontSize: 10.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w400)),
                       ),
                       const Divider(
@@ -214,7 +214,7 @@ class _AppSettings extends StatelessWidget {
                           child: Text('Hakkında',
                               style: TextStyle(
                                   color: Theme.of(context).cardColor,
-                                  fontSize: 10.sp,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w400)),
                         ),
                       ),

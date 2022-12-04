@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/repositories/image_repository.dart';

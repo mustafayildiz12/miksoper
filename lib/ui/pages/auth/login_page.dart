@@ -5,7 +5,7 @@ import 'package:miksoper/ui/pages/auth/register_page.dart';
 import 'package:miksoper/ui/pages/tabs/tab_page/tabs_page.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_text.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_text_button.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/page_paddings.dart';
@@ -43,12 +43,12 @@ class _LoginPageState extends State<LoginPage> {
                   "Mixoper'e Hoşgeldin",
                   style: TextStyle(
                       color: _colors.bluegrey_800,
-                      fontSize: 18.sp,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold),
                 ),
-                PageSizedBox.heightXS(),
+                PageSizedBox.heightS(),
                 const MyPrimaryText(text: "Hadi Giriş Yap"),
-                PageSizedBox.height(15.h),
+                PageSizedBox.height(12.h),
                 MyPrimaryFormField(
                   onChanged: (p0) {},
                   label: 'Email',
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   label: 'Password',
                 ),
-                PageSizedBox.heightXXS(),
+                PageSizedBox.heightXS(),
                 Align(
                   alignment: Alignment.centerRight,
                   child: MyPrimaryTextButton(
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       text: "Şifremi Unuttum"),
                 ),
-                //   PageSizedBox.heightXS(),
+                   PageSizedBox.heightXS(),
                 MyPrimaryButton(
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(

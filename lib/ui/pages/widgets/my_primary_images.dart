@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyPrimaryImage extends StatelessWidget {
   const MyPrimaryImage({required this.path, this.onPressed, super.key});

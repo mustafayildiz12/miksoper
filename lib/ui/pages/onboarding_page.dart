@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
 import 'package:miksoper/ui/pages/auth/login_page.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -36,7 +36,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 "Başlarken ...",
                 style: TextStyle(
                     color: _colors.colorAccentDark,
-                    fontSize: 15.sp,
+                    fontSize: 22.sp,
                     fontWeight: FontWeight.w600),
               ),
               PageSizedBox.heightM(),
@@ -44,7 +44,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 "Bir kaç adımdan bahsetmek istedik !",
                 style: TextStyle(
                     color: _colors.bluegrey_400,
-                    fontSize: 12.sp,
+                    fontSize: 17.sp,
                     fontWeight: FontWeight.w500),
               ),
               Expanded(
@@ -129,7 +129,7 @@ class _PageViewItem extends StatelessWidget {
         PageSizedBox.height(10.h),
         Container(
           width: 80.w,
-          height: 55.h,
+          height: 52.h,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image:
@@ -148,7 +148,7 @@ class _PageViewItem extends StatelessWidget {
                     pageViewItems.imageTitle,
                     style: TextStyle(
                         color: colors.colorPrimary,
-                        fontSize: 14.sp,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w600),
                   ),
                   PageSizedBox.heightL(),
@@ -159,7 +159,7 @@ class _PageViewItem extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: colors.colorPrimary,
-                          fontSize: 12.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -199,7 +199,7 @@ class _PageViewItem extends StatelessWidget {
               pageViewItems.buttonTitle,
               style: TextStyle(
                   color: colors.colorPrimary,
-                  fontSize: 12.sp,
+                  fontSize: 17.sp,
                   fontWeight: FontWeight.w400),
             )),
           ),

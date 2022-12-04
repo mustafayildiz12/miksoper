@@ -6,7 +6,7 @@ import 'package:miksoper/ui/pages/tabs/home/home_page.dart';
 import 'package:miksoper/ui/pages/tabs/notification/notifications.dart';
 import 'package:miksoper/ui/pages/tabs/profile/profile.dart';
 import 'package:miksoper/ui/pages/tabs/tab_page/search_page.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TabsPage extends StatefulWidget {
   const TabsPage({super.key});

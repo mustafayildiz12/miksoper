@@ -1,7 +1,7 @@
 import 'package:comment_tree/comment_tree.dart';
 import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CommentRow extends StatelessWidget {
   const CommentRow({Key? key}) : super(key: key);

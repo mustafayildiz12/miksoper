@@ -22,7 +22,7 @@ class _UserTwitTitleRow extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
-                  .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w500),
+                  .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
             ),
             PageSizedBox.heightXXS(),
             Text.rich(
@@ -35,7 +35,7 @@ class _UserTwitTitleRow extends StatelessWidget {
                   TextSpan(
                     text: 'Hwy,Cartage',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 10.sp,
+                        fontSize: 14.sp,
                         color: Colors.blue,
                         fontWeight: FontWeight.w500),
                   ),

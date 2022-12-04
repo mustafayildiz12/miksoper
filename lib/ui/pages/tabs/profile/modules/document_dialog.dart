@@ -21,12 +21,12 @@ class _DocumentDialog extends StatelessWidget {
             ],
           ),
           body: Padding(
-            padding:  PagePadding.allM(),
+            padding: PagePadding.allM(),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   PageSizedBox.heightM(),
+                  PageSizedBox.heightM(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -60,9 +60,12 @@ class _DocumentDialog extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: 10,
                       itemBuilder: (context, index) {
-                        return  _GridItemCard(index: index,title: 'Marka $index',);
+                        return _GridItemCard(
+                          index: index,
+                          title: 'Marka $index',
+                        );
                       }),
-                   PageSizedBox.heightM(),
+                  PageSizedBox.heightM(),
                 ],
               ),
             ),
@@ -86,7 +89,7 @@ class _GridItemCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding:  PagePadding.horizontalXS(),
+          padding: PagePadding.horizontalXS(),
           child: Container(
             width: 45.w,
             height: 12.h,
@@ -95,12 +98,12 @@ class _GridItemCard extends StatelessWidget {
                     topLeft: Radius.circular(2.w),
                     topRight: Radius.circular(2.w)),
                 image: DecorationImage(
-                    image: AssetImage('assets/images/image_${index+1}.jpg'),
+                    image: AssetImage('assets/images/image_${index + 1}.jpg'),
                     fit: BoxFit.fitWidth)),
           ),
         ),
         Padding(
-          padding:  PagePadding.horizontalXS(),
+          padding: PagePadding.horizontalXS(),
           child: Container(
             height: 8.h,
             width: 45.w,

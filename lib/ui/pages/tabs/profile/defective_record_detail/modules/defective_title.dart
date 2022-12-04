@@ -110,7 +110,7 @@ class _PostDialogState extends State<_PostDialog> {
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w500),
+                        .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Type Something',
@@ -118,7 +118,7 @@ class _PostDialogState extends State<_PostDialog> {
                             .textTheme
                             .bodyLarge!
                             .copyWith(
-                                fontSize: 10.sp, fontWeight: FontWeight.w500)),
+                                fontSize: 14.sp, fontWeight: FontWeight.w500)),
                   ),
                 ),
                 const Spacer(),
@@ -189,7 +189,7 @@ class _UserPostRow extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
-                  .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w500),
+                  .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w500),
             ),
             PageSizedBox.heightXXS(),
             Text.rich(
@@ -202,7 +202,7 @@ class _UserPostRow extends StatelessWidget {
                   TextSpan(
                     text: 'Hwy,Cartage',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 10.sp,
+                        fontSize: 14.sp,
                         color: Colors.blue,
                         fontWeight: FontWeight.w500),
                   ),

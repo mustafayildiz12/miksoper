@@ -3,7 +3,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../../core/constants/date_constant.dart';
 
@@ -80,7 +80,7 @@ class _PdfScreenState extends State<PdfScreen> {
               width: double.infinity,
               height: 10.h,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   SizedBox(
                     width: 70.w,

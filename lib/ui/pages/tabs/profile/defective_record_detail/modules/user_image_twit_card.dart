@@ -25,7 +25,7 @@ class _UserImageTwitCard extends StatelessWidget {
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
-                      .bodySmall!
+                      .bodyMedium!
                       .copyWith(color: MyColors().grey_600),
                 ),
                 PageSizedBox.heightS(),

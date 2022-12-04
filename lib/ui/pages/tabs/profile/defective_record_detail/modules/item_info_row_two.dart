@@ -17,7 +17,7 @@ class _ItemInfoRowTwo extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w400),
+                .copyWith(fontSize: 14.sp, fontWeight: FontWeight.w400),
           ),
           PageSizedBox.heightXXS(),
           Text(
@@ -25,7 +25,7 @@ class _ItemInfoRowTwo extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .copyWith(fontSize: 10.sp, fontWeight: FontWeight.bold),
+                .copyWith(fontSize: 14.sp, fontWeight: FontWeight.bold),
           ),
         ],
       ),

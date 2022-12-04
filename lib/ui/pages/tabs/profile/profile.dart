@@ -7,7 +7,7 @@ import 'package:miksoper/ui/pages/tabs/profile/defective_record_detail/defective
 import 'package:miksoper/ui/pages/widgets/my_primary_button.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_form_field.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helpers/providers/file_picker_provider.dart';
 import '../../auth/login_page.dart';

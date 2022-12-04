@@ -127,7 +127,7 @@ class _FollowsItemCard extends StatelessWidget {
                     "12 Yorum",
                     style: TextStyle(
                         color: Theme.of(context).focusColor,
-                        fontSize: 10.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   Padding(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 part 'modules/comment_item_card.dart';
 part 'modules/primary_jpg_images.dart';

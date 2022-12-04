@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:miksoper/ui/pages/widgets/my_primary_text.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/page_paddings.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/constants/colors.dart';
 

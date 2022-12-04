@@ -3,7 +3,7 @@ import 'package:miksoper/core/constants/city_list.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
 import 'package:miksoper/ui/pages/widgets/fake_bar.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/constants/colors.dart';
 

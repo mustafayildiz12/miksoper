@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyPrimaryTextButton extends StatelessWidget {
   const MyPrimaryTextButton(
@@ -17,7 +17,7 @@ class MyPrimaryTextButton extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-            color: color, fontSize: 12.sp, fontWeight: FontWeight.bold),
+            color: color, fontSize: 17.sp, fontWeight: FontWeight.bold),
       ),
     );
   }

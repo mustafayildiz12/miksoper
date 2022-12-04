@@ -3,7 +3,7 @@ import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_text.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../widgets/my_primary_form_field.dart';
 import '../widgets/my_primary_button.dart';
@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   "Üye Ol",
                   style: TextStyle(
                       color: _colors.bluegrey_800,
-                      fontSize: 18.sp,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.bold),
                 ),
                 PageSizedBox.heightXS(),
