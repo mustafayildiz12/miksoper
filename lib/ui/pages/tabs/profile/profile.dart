@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../core/helpers/providers/file_picker_provider.dart';
+import '../../../../core/helpers/providers/mobx_file/post_view_model.dart';
 import '../../auth/login_page.dart';
 import 'about_page.dart';
 

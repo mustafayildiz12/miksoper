@@ -7,6 +7,7 @@ class _UploadDocumentDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     FilePickerProvider filePickerProvider =
         Provider.of<FilePickerProvider>(context);
+    final viewModel = PostViewModel();
     return SizedBox(
       height: 90.h,
       child: Scaffold(
@@ -34,19 +35,21 @@ class _UploadDocumentDialog extends StatelessWidget {
               PageSizedBox.heightM(),
               MyPrimaryFormField(onChanged: (v) {}, label: "Belge İsmi"),
               PageSizedBox.heightM(),
-              MyPrimaryButton(
-                title:
-                    filePickerProvider.isLoading ? 'Yükleniyor' : 'BELGE YÜKLE',
-                onPressed: () async {
-                  await filePickerProvider.pickFile(context);
+              Observer(builder: (_) {
+                return MyPrimaryButton(
+                  title: viewModel.isLoading ? 'Yükleniyor' : 'BELGE YÜKLE',
+                  onPressed: () async {
+                    // await filePickerProvider.pickFile(context);
 
-                  /*
+                    await viewModel.pickFile(context);
+                    /*
                  
                   await OpenFile.open(
                       filePickerProvider.result!.files.first.path!);
                   */
-                },
-              ),
+                  },
+                );
+              }),
               SizedBox(
                 height: 5.h,
               ),

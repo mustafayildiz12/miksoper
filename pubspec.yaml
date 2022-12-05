@@ -53,6 +53,10 @@ dependencies:
  # open_file: ^3.2.1
   flutter_pdfview: ^1.2.5
   intl: ^0.17.0
+  flutter_mobx: ^2.0.6+5
+  build_runner: ^2.3.2
+  mobx: ^2.1.3
+  mobx_codegen: ^2.1.1
   
 
 dev_dependencies:
