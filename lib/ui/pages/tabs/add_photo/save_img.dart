@@ -14,8 +14,6 @@ import '../../../../core/repositories/image_repository.dart';
 import '../../../../core/repositories/mix_life_cycle.dart';
 import '../../../../core/repositories/pick_manager.dart';
 import '../../widgets/fake_bar.dart';
-import 'aspect_ratio_video.dart';
-import 'display_video.dart';
 import 'post_defective.dart';
 
 class SaveImg extends StatefulWidget {
@@ -88,20 +86,28 @@ class _UploadImgRowState extends State<_UploadImgRow>
   @override
   Widget build(BuildContext context) {
     final uploadImage = UploadImageMobx();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Container(
-          height: 25.h,
-          width: 40.w,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/image_10.jpg'),
-                fit: BoxFit.cover),
-          ),
-        ),
-        Observer(builder: (_) {
-          return Container(
+    return Observer(builder: (_) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          uploadImage.image == null
+              ? Container(
+                  height: 25.h,
+                  width: 40.w,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/image_10.jpg'),
+                        fit: BoxFit.cover),
+                  ),
+                )
+              : SizedBox(
+                  height: 25.h,
+                  child: Image.file(
+                    File(uploadImage.image!.path),
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+          Container(
             height: 25.h,
             width: 40.w,
             color: MyColors().grey_10,
@@ -109,18 +115,12 @@ class _UploadImgRowState extends State<_UploadImgRow>
               children: [
                 const Spacer(),
                 SizedBox(
-                  height: 10.h,
-                  // width: 20.w,
-                  child: uploadImage.image == null
-                      ? Image.asset(
-                          'assets/icons/imgup2.png',
-                          fit: BoxFit.fitHeight,
-                        )
-                      : Image.file(
-                          File(uploadImage.image!.path),
-                          fit: BoxFit.cover,
-                        ),
-                ),
+                    height: 10.h,
+                    // width: 20.w,
+                    child: Image.asset(
+                      'assets/icons/imgup2.png',
+                      fit: BoxFit.fitHeight,
+                    )),
                 //  PageSizedBox.height(1.h),
                 ElevatedButton(
                   style: ButtonStyle(
@@ -137,10 +137,10 @@ class _UploadImgRowState extends State<_UploadImgRow>
                 PageSizedBox.height(2.h),
               ],
             ),
-          );
-        })
-      ],
-    );
+          )
+        ],
+      );
+    });
   }
 
   @override
@@ -164,9 +164,28 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
     with WidgetsBindingObserver, LifeCycleUse {
   final IPickManager pickManager = PickManager();
   final IPermissionHandler permissionHandler = PermissionHandler();
-  XFile? image;
+
   bool? isMediaAccessOkay;
-  VideoPlayerController? _controller;
+
+  File? _video;
+  File? _cameraVideo;
+
+  ImagePicker picker = ImagePicker();
+
+  VideoPlayerController? _videoPlayerController;
+
+  // This funcion will helps you to pick a Video File
+  _pickVideo() async {
+    var pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+
+    _video = File(pickedFile!.path);
+
+    _videoPlayerController = VideoPlayerController.file(_video!)
+      ..initialize().then((_) {
+        setState(() {});
+        _videoPlayerController!.play();
+      });
+  }
 
   Future<void> _checkVideoPermission() async {
     isMediaAccessOkay = await permissionHandler.checkCamera();
@@ -177,47 +196,227 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35.h,
-      width: 100.w,
-      color: MyColors().grey_10,
-      child: _controller == null
-          ? Column(
-              children: [
-                const Spacer(),
-                SizedBox(
-                    height: 18.h,
-                    // width: 20.w,
-                    child: Image.asset(
-                      'assets/icons/videoupload.png',
-                      fit: BoxFit.fitHeight,
-                    )),
-                //   PageSizedBox.height(3.h),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStatePropertyAll(Size(90.w, 5.h)),
-                    shape: const MaterialStatePropertyAll(StadiumBorder()),
-                    backgroundColor:
-                        MaterialStatePropertyAll(MyColors().colorAccentDark),
+        height: 35.h,
+        width: 100.w,
+        color: MyColors().grey_10,
+        child: _video != null
+            ? _videoPlayerController!.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _videoPlayerController!.value.aspectRatio,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        VideoPlayer(_videoPlayerController!),
+                        _ControlsOverlay(
+                          controller: _videoPlayerController!,
+                        ),
+                        VideoProgressIndicator(_videoPlayerController!,
+                            colors: const VideoProgressColors(
+                                playedColor: Colors.white,
+                                bufferedColor: Colors.black),
+                            allowScrubbing: true),
+                        /*
+                        Positioned(
+                          left: 10.w,
+                          bottom: 10.h,
+                          child: IconButton(
+                            onPressed: () {
+                              _videoPlayerController!.value.isPlaying
+                                  ? _videoPlayerController!.pause()
+                                  : _videoPlayerController!.play();
+                                  setState(() {
+                                    
+                                  });
+                            },
+                            icon: Icon(
+                              _videoPlayerController!.value.isPlaying
+                                  ? Icons.pause_circle_outline
+                                  : Icons.play_arrow_rounded,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                       */
+                      ],
+                    ),
+                  )
+                : Container()
+            : Column(
+                children: [
+                  const Spacer(),
+                  SizedBox(
+                      height: 18.h,
+                      // width: 20.w,
+                      child: Image.asset(
+                        'assets/icons/videoupload.png',
+                        fit: BoxFit.fitHeight,
+                      )),
+                  //   PageSizedBox.height(3.h),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStatePropertyAll(Size(90.w, 5.h)),
+                      shape: const MaterialStatePropertyAll(StadiumBorder()),
+                      backgroundColor:
+                          MaterialStatePropertyAll(MyColors().colorAccentDark),
+                    ),
+                    onPressed: () async {
+                      _pickVideo();
+                    },
+                    child: const Text('Video Yükle'),
                   ),
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DisplayVideo(),
-                      ),
-                    );
-                  },
-                  child: const Text('Video Yükle'),
-                ),
-                PageSizedBox.height(3.h),
-              ],
-            )
-          : AspectRatioVideo(_controller),
-    );
+                  PageSizedBox.height(3.h),
+                ],
+              ));
   }
 
   @override
   void onResume() {
     _checkVideoPermission();
+  }
+}
+
+class _ControlsOverlay extends StatefulWidget {
+  const _ControlsOverlay({Key? key, required this.controller})
+      : super(key: key);
+
+  static const List<Duration> _exampleCaptionOffsets = <Duration>[
+    Duration(seconds: -10),
+    Duration(seconds: -3),
+    Duration(seconds: -1, milliseconds: -500),
+    Duration(milliseconds: -250),
+    Duration.zero,
+    Duration(milliseconds: 250),
+    Duration(seconds: 1, milliseconds: 500),
+    Duration(seconds: 3),
+    Duration(seconds: 10),
+  ];
+  static const List<double> _examplePlaybackRates = <double>[
+    0.25,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    3.0,
+    5.0,
+    10.0,
+  ];
+
+  final VideoPlayerController controller;
+
+  @override
+  State<_ControlsOverlay> createState() => _ControlsOverlayState();
+}
+
+class _ControlsOverlayState extends State<_ControlsOverlay> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 50),
+          reverseDuration: const Duration(milliseconds: 200),
+          child: widget.controller.value.isPlaying
+              ? Container(
+                  color: Colors.black26,
+                  child: Center(
+                    child: Icon(
+                      Icons.pause_outlined,
+                      color: Colors.white70,
+                      size: 30.sp,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                )
+              : Container(
+                  color: Colors.black26,
+                  child: Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white70,
+                      size: 30.sp,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                ),
+        ),
+        GestureDetector(
+          onTap: () {
+            widget.controller.value.isPlaying
+                ? widget.controller.pause()
+                : widget.controller.play();
+            setState(() {});
+          },
+        ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: PopupMenuButton<Duration>(
+            color: Colors.white,
+            initialValue: widget.controller.value.captionOffset,
+            tooltip: 'Caption Offset',
+            onSelected: (Duration delay) {
+              widget.controller.setCaptionOffset(delay);
+              setState(() {});
+            },
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuItem<Duration>>[
+                for (final Duration offsetDuration
+                    in _ControlsOverlay._exampleCaptionOffsets)
+                  PopupMenuItem<Duration>(
+                    value: offsetDuration,
+                    child: Text(
+                      '${offsetDuration.inMilliseconds}ms',
+                      style: TextStyle(color: Colors.blue, fontSize: 14.sp),
+                    ),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text(
+                  '${widget.controller.value.captionOffset.inMilliseconds}ms',
+                  style: TextStyle(color: Colors.white70, fontSize: 14.sp)),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: PopupMenuButton<double>(
+            color: Colors.white,
+            initialValue: widget.controller.value.playbackSpeed,
+            tooltip: 'Playback speed',
+            onSelected: (double speed) {
+              widget.controller.setPlaybackSpeed(speed);
+              setState(() {});
+            },
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuItem<double>>[
+                for (final double speed
+                    in _ControlsOverlay._examplePlaybackRates)
+                  PopupMenuItem<double>(
+                    value: speed,
+                    child: Text(
+                      '${speed}x',
+                      style: TextStyle(color: Colors.blue, fontSize: 14.sp),
+                    ),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text(
+                '${widget.controller.value.playbackSpeed}x',
+                style: TextStyle(color: Colors.white70, fontSize: 14.sp),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

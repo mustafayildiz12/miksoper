@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:video_player/video_player.dart';
@@ -11,79 +10,49 @@ part 'upload_video.g.dart';
 class UploadVideo = _UploadVideo with _$UploadVideo;
 
 abstract class _UploadVideo with Store {
+  // IPickManager pickManager = PickManager();
+  // IPermissionHandler permissionHandler = PermissionHandler();
+  final ImagePicker picker = ImagePicker();
+
   @observable
-  List<XFile>? imageFileList;
-  set imageFile(XFile? value) {
-    imageFileList = value == null ? null : [value];
-  }
-
-  dynamic pickImageError;
-  bool isVideo = false;
   VideoPlayerController? controller;
-  VideoPlayerController? toBeDisposed;
-  String? retrieveDataError;
-  ImagePicker picker = ImagePicker();
+
+  File? video;
 
   @action
-  Future<void> playVideo(XFile? file) async {
-    if (file != null) {
-      await disposeVideoController();
-      late VideoPlayerController controller;
-      if (kIsWeb) {
-        controller = VideoPlayerController.network(file.path);
-      } else {
-        controller = VideoPlayerController.file(File(file.path));
-      }
-      controller = controller;
-
-      const double volume = kIsWeb ? 0.0 : 1.0;
-      await controller.setVolume(volume);
-      await controller.initialize();
-      await controller.setLooping(true);
-      await controller.play();
-    }
+  pickVideo() async {
+    var pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+    video = File(pickedFile!.path);
+    controller = VideoPlayerController.file(video!)
+      ..initialize().then((_) {
+        controller!.play();
+      });
   }
 
   @action
-  Future<void> onImageButtonPressed(ImageSource source) async {
-    if (controller != null) {
-      await controller!.setVolume(0.0);
-    }
-    if (isVideo) {
-      final XFile? file = await picker.pickVideo(
-        source: source,
-      );
-      await playVideo(file);
-    }
+  stopVideo() async {
+    controller!.pause();
   }
 
+  /*
   @action
-  Future<void> disposeVideoController() async {
-    if (toBeDisposed != null) {
-      await toBeDisposed!.dispose();
-    }
-    toBeDisposed = controller;
-    controller = null;
+  Future<void> checkPermission() async {
+    isMediaAccessOkay = await permissionHandler.checkMedia();
+    print('MediaOkey: $isMediaAccessOkay');
   }
+   */
 
+  /*
   @action
-  Future<void> retrieveLostData() async {
-    final LostDataResponse response = await picker.retrieveLostData();
-    if (response.isEmpty) {
-      return;
-    }
-    if (response.file != null) {
-      if (response.type == RetrieveType.video) {
-        isVideo = true;
-        await playVideo(response.file);
-      } else {
-        isVideo = false;
+  pickVideoFromCamera() async {
+    var pickedFile = await pickManager.fetchCameraVideo();
 
-        imageFile = response.file;
-        imageFileList = response.files;
-      }
-    } else {
-      retrieveDataError = response.exception!.code;
-    }
+    cameraVideo = File(pickedFile!.file!.path);
+
+    cameraVideoPlayerController = VideoPlayerController.file(cameraVideo!)
+      ..initialize().then((_) {
+        cameraVideoPlayerController!.play();
+      });
   }
+  */
 }
