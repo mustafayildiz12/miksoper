@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
+import 'package:miksoper/core/helpers/mobxs/upload_images/upload_image.dart';
 import 'package:miksoper/core/repositories/mix_life_cycle.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../core/repositories/image_repository.dart';
-import '../../../../core/repositories/pick_manager.dart';
 import 'save_img.dart';
 
 class AddPhotoPage extends StatefulWidget {
@@ -22,19 +21,9 @@ class AddPhotoPage extends StatefulWidget {
 
 class _AddPhotoPageState extends State<AddPhotoPage>
     with WidgetsBindingObserver, LifeCycleUse {
-  final IPickManager pickManager = PickManager();
-  final IPermissionHandler permissionHandler = PermissionHandler();
-  XFile? image;
-  bool? isMediaAccessOkay;
-
-  Future<void> _checkCameraPermission() async {
-    isMediaAccessOkay = await permissionHandler.checkCamera();
-    print('MediaOkey: $isMediaAccessOkay');
-  //  setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    final uploadImage = UploadImageMobx();
     return Scaffold(
       body: Container(
         width: 100.w,
@@ -44,56 +33,61 @@ class _AddPhotoPageState extends State<AddPhotoPage>
             image: AssetImage('assets/images/back.png'),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            image != null
-                ? SizedBox(
-                    width: 50.w,
-                    height: 30.h,
-                    child: Image.file(
-                      File(image!.path),
-                      fit: BoxFit.cover,
-                    ))
-                : const SizedBox(),
-            GestureDetector(
-              onTap: () async {
-                final newImage = await pickManager.fetchStorageImage();
-                setState(() {
-                  image = newImage?.file;
-                });
-              },
-              child: Container(
-                height: 44.w,
-                width: 44.w,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: PagePadding.allL(),
-                  child: Image.asset(
-                    'assets/icons/cameraphoto2.png',
-                    color: Colors.white,
+        child: Observer(builder: (_) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              uploadImage.image != null
+                  ? SizedBox(
+                      width: 50.w,
+                      height: 30.h,
+                      child: Image.file(
+                        File(uploadImage.image!.path),
+                        fit: BoxFit.cover,
+                      ))
+                  : Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.amber,
+                    ),
+              GestureDetector(
+                onTap: () async {
+                  uploadImage.isMediaAccessOkay
+                      ? await uploadImage.getImage()
+                      : uploadImage.checkCameraPermission();
+                },
+                child: Container(
+                  height: 44.w,
+                  width: 44.w,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: PagePadding.allL(),
+                    child: Image.asset(
+                      'assets/icons/cameraphoto2.png',
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            PageSizedBox.heightXS(),
-            SizedBox(
-              width: 54.w,
-              child: Text(
-                "Sorununu anlatan bir resim çekmek için yukarıdaki "
-                "butona tıklayın",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).shadowColor,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ),
+              PageSizedBox.heightXS(),
+              SizedBox(
+                width: 54.w,
+                child: Text(
+                  "Sorununu anlatan bir resim çekmek için yukarıdaki "
+                  "butona tıklayın",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Theme.of(context).shadowColor,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w600),
+                ),
+              )
+            ],
+          );
+        }),
       ),
       floatingActionButton: SpeedDial(
         // childPadding: PagePadding.verticalS(),
@@ -146,7 +140,8 @@ class _AddPhotoPageState extends State<AddPhotoPage>
 
   @override
   void onResume() {
-    _checkCameraPermission();
+    final uploadImage = UploadImageMobx();
+    uploadImage.checkCameraPermission();
     print('onResuma');
   }
 }

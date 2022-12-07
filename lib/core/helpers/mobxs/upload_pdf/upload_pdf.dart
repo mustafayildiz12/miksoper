@@ -6,12 +6,12 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../ui/pages/tabs/profile/pdf_screen/pdf_screen.dart';
 
-part 'post_view_model.g.dart';
+part 'upload_pdf.g.dart';
 
 // ignore: library_private_types_in_public_api
-class PostViewModel  = _PostViewModel  with _$PostViewModel ;
+class UploadPdf = _UploadPdf with _$UploadPdf;
 
-abstract class _PostViewModel  with Store {
+abstract class _UploadPdf with Store {
   @observable
   FilePickerResult? result;
   PlatformFile? pickedFile;
@@ -20,7 +20,7 @@ abstract class _PostViewModel  with Store {
   File? displayFile;
 
   @action
-   pickFile(BuildContext context) async {
+  pickFile(BuildContext context) async {
     try {
       isLoading = true;
       result = await FilePicker.platform.pickFiles(
@@ -46,8 +46,8 @@ abstract class _PostViewModel  with Store {
         );
       }
       isLoading = false;
-    } catch (e) {}
-
-    
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

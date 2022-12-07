@@ -4,14 +4,12 @@ import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
 import 'package:miksoper/core/constants/city_list.dart';
+import 'package:miksoper/core/helpers/mobxs/upload_pdf/upload_pdf.dart';
 import 'package:miksoper/ui/pages/tabs/profile/defective_record_detail/defective_record_detail.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_button.dart';
 import 'package:miksoper/ui/pages/widgets/my_primary_form_field.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../core/helpers/providers/file_picker_provider.dart';
-import '../../../../core/helpers/providers/mobx_file/post_view_model.dart';
 import '../../auth/login_page.dart';
 import 'about_page.dart';
 
