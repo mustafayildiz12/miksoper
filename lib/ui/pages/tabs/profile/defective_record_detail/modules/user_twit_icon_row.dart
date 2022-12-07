@@ -74,69 +74,59 @@ class _PostCommentDialog extends StatelessWidget {
           CommentProvider commentProvider =
               Provider.of<CommentProvider>(context);
           return SizedBox(
-              width: width * 90,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _CommentPostFakeBar(
-                      commentProvider: commentProvider,
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const CommentRow(),
-                          //   const CommentRow(),
-                          Padding(
-                            padding: PagePadding.horizontalS(),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    initialValue: commentProvider.commentValue,
-                                    onChanged: (comment) {
-                                      commentProvider.commentValue = comment;
-
-                                      commentProvider.notify();
-                                    },
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                    decoration: InputDecoration(
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        hintText:
-                                            "Ayşe Demir'e cevap veriyorsun",
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                  ),
-                                ),
-                                IconButton(
-                                    onPressed: commentProvider.commentValue !=
-                                            ''
-                                        ? () {
-                                            print(commentProvider.commentValue);
-                                          }
-                                        : null,
-                                    icon: const Icon(
-                                      Icons.send,
-                                      //  color: MyColors().colorAccentDark,
-                                    ))
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    /*
-                    SingleChildScrollView(
-                      child: Column(
-                        children: const [],
-                      ),
-                    ),
-                    */
-                  ],
+            width: width * 90,
+            child: Column(
+              children: [
+                _CommentPostFakeBar(
+                  commentProvider: commentProvider,
                 ),
-              ));
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: const [
+                        CommentRow(),
+                        CommentRow(),
+                      ],
+                    ),
+                  ),
+                ),
+                //   const Spacer(),
+                Padding(
+                  padding: PagePadding.horizontalS(),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          initialValue: commentProvider.commentValue,
+                          onChanged: (comment) {
+                            commentProvider.commentValue = comment;
+
+                            commentProvider.notify();
+                          },
+                          style: Theme.of(context).textTheme.bodySmall,
+                          decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: "Ayşe Demir'e cevap veriyorsun",
+                              hintStyle: Theme.of(context).textTheme.bodySmall),
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: commentProvider.commentValue != ''
+                              ? () {
+                                  print(commentProvider.commentValue);
+                                }
+                              : null,
+                          icon: const Icon(
+                            Icons.send,
+                            //  color: MyColors().colorAccentDark,
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
         },
       ),
     );
