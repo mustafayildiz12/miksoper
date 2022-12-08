@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:miksoper/core/constants/colors.dart';
 import 'package:miksoper/core/constants/page_paddings.dart';
 import 'package:miksoper/core/constants/page_sized_box.dart';
+import 'package:miksoper/core/helpers/providers/upload_video.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../core/helpers/mobxs/upload_images/upload_image.dart';
-import '../../../../core/repositories/image_repository.dart';
 import '../../../../core/repositories/mix_life_cycle.dart';
-import '../../../../core/repositories/pick_manager.dart';
 import '../../widgets/fake_bar.dart';
 import 'post_defective.dart';
 
@@ -162,85 +161,32 @@ class _UploadVideoRow extends StatefulWidget {
 
 class _UploadVideoRowState extends State<_UploadVideoRow>
     with WidgetsBindingObserver, LifeCycleUse {
-  final IPickManager pickManager = PickManager();
-  final IPermissionHandler permissionHandler = PermissionHandler();
-
-  bool? isMediaAccessOkay;
-
-  File? _video;
-  File? _cameraVideo;
-
-  ImagePicker picker = ImagePicker();
-
-  VideoPlayerController? _videoPlayerController;
-
-  // This funcion will helps you to pick a Video File
-  _pickVideo() async {
-    var pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-
-    _video = File(pickedFile!.path);
-
-    _videoPlayerController = VideoPlayerController.file(_video!)
-      ..initialize().then((_) {
-        setState(() {});
-        _videoPlayerController!.play();
-      });
-  }
-
-  Future<void> _checkVideoPermission() async {
-    isMediaAccessOkay = await permissionHandler.checkCamera();
-    print('MediaOkey: $isMediaAccessOkay');
-    //  setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    final UploadVideoProvider uploadVideoProvider =
+        Provider.of<UploadVideoProvider>(context);
     return Container(
         height: 35.h,
         width: 100.w,
         color: MyColors().grey_10,
-        child: _video != null
-            ? _videoPlayerController!.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _videoPlayerController!.value.aspectRatio,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        VideoPlayer(_videoPlayerController!),
-                        _ControlsOverlay(
-                          controller: _videoPlayerController!,
-                        ),
-                        VideoProgressIndicator(_videoPlayerController!,
-                            colors: const VideoProgressColors(
-                                playedColor: Colors.white,
-                                bufferedColor: Colors.black),
-                            allowScrubbing: true),
-                        /*
-                        Positioned(
-                          left: 10.w,
-                          bottom: 10.h,
-                          child: IconButton(
-                            onPressed: () {
-                              _videoPlayerController!.value.isPlaying
-                                  ? _videoPlayerController!.pause()
-                                  : _videoPlayerController!.play();
-                                  setState(() {
-                                    
-                                  });
-                            },
-                            icon: Icon(
-                              _videoPlayerController!.value.isPlaying
-                                  ? Icons.pause_circle_outline
-                                  : Icons.play_arrow_rounded,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                       */
-                      ],
-                    ),
-                  )
-                : Container()
+        child: uploadVideoProvider.video != null
+            ? AspectRatio(
+                aspectRatio: uploadVideoProvider
+                    .videoPlayerController!.value.aspectRatio,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    VideoPlayer(uploadVideoProvider.videoPlayerController!),
+                    const _ControlsOverlay(),
+                    VideoProgressIndicator(
+                        uploadVideoProvider.videoPlayerController!,
+                        colors: const VideoProgressColors(
+                            playedColor: Colors.white,
+                            bufferedColor: Colors.black),
+                        allowScrubbing: true),
+                  ],
+                ),
+              )
             : Column(
                 children: [
                   const Spacer(),
@@ -260,7 +206,7 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
                           MaterialStatePropertyAll(MyColors().colorAccentDark),
                     ),
                     onPressed: () async {
-                      _pickVideo();
+                      uploadVideoProvider.pickVideo();
                     },
                     child: const Text('Video Yükle'),
                   ),
@@ -271,13 +217,14 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
 
   @override
   void onResume() {
-    _checkVideoPermission();
+    final UploadVideoProvider uploadVideoProvider =
+        Provider.of<UploadVideoProvider>(context);
+    uploadVideoProvider.checkVideoPermission();
   }
 }
 
 class _ControlsOverlay extends StatefulWidget {
-  const _ControlsOverlay({Key? key, required this.controller})
-      : super(key: key);
+  const _ControlsOverlay({Key? key}) : super(key: key);
 
   static const List<Duration> _exampleCaptionOffsets = <Duration>[
     Duration(seconds: -10),
@@ -301,8 +248,6 @@ class _ControlsOverlay extends StatefulWidget {
     10.0,
   ];
 
-  final VideoPlayerController controller;
-
   @override
   State<_ControlsOverlay> createState() => _ControlsOverlayState();
 }
@@ -310,12 +255,14 @@ class _ControlsOverlay extends StatefulWidget {
 class _ControlsOverlayState extends State<_ControlsOverlay> {
   @override
   Widget build(BuildContext context) {
+    final UploadVideoProvider uploadVideoProvider =
+        Provider.of<UploadVideoProvider>(context);
     return Stack(
       children: <Widget>[
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 50),
           reverseDuration: const Duration(milliseconds: 200),
-          child: widget.controller.value.isPlaying
+          child: uploadVideoProvider.isPlaying
               ? Container(
                   color: Colors.black26,
                   child: Center(
@@ -339,23 +286,23 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                   ),
                 ),
         ),
-        GestureDetector(
+        InkWell(
           onTap: () {
-            widget.controller.value.isPlaying
-                ? widget.controller.pause()
-                : widget.controller.play();
-            setState(() {});
+            print(uploadVideoProvider.isPlaying);
+            uploadVideoProvider.playOrPause();
           },
         ),
         Align(
           alignment: Alignment.topLeft,
           child: PopupMenuButton<Duration>(
             color: Colors.white,
-            initialValue: widget.controller.value.captionOffset,
+            initialValue:
+                uploadVideoProvider.videoPlayerController!.value.captionOffset,
             tooltip: 'Caption Offset',
             onSelected: (Duration delay) {
-              widget.controller.setCaptionOffset(delay);
-              setState(() {});
+              uploadVideoProvider.videoPlayerController!
+                  .setCaptionOffset(delay);
+              uploadVideoProvider.notify();
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<Duration>>[
@@ -376,7 +323,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                 horizontal: 16,
               ),
               child: Text(
-                  '${widget.controller.value.captionOffset.inMilliseconds}ms',
+                  '${uploadVideoProvider.videoPlayerController!.value.captionOffset.inMilliseconds}ms',
                   style: TextStyle(color: Colors.white70, fontSize: 14.sp)),
             ),
           ),
@@ -385,11 +332,13 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
           alignment: Alignment.topRight,
           child: PopupMenuButton<double>(
             color: Colors.white,
-            initialValue: widget.controller.value.playbackSpeed,
+            initialValue:
+                uploadVideoProvider.videoPlayerController!.value.playbackSpeed,
             tooltip: 'Playback speed',
             onSelected: (double speed) {
-              widget.controller.setPlaybackSpeed(speed);
-              setState(() {});
+              uploadVideoProvider.videoPlayerController!
+                  .setPlaybackSpeed(speed);
+              uploadVideoProvider.notify();
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<double>>[
@@ -410,7 +359,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                 horizontal: 16,
               ),
               child: Text(
-                '${widget.controller.value.playbackSpeed}x',
+                '${uploadVideoProvider.videoPlayerController!.value.playbackSpeed}x',
                 style: TextStyle(color: Colors.white70, fontSize: 14.sp),
               ),
             ),

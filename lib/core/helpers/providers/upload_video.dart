@@ -1,32 +1,25 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobx/mobx.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../repositories/image_repository.dart';
-import '../../../repositories/pick_manager.dart';
+import '../../repositories/image_repository.dart';
+import '../../repositories/pick_manager.dart';
 
-part 'upload_video.g.dart';
+class UploadVideoProvider extends ChangeNotifier {
+  bool? isMediaAccessOkay;
+  bool isPlaying = false;
 
-// ignore: library_private_types_in_public_api
-class UploadVideo = _UploadVideo with _$UploadVideo;
-
-abstract class _UploadVideo with Store {
+  File? video;
   final ImagePicker picker = ImagePicker();
   final IPickManager pickManager = PickManager();
   final IPermissionHandler permissionHandler = PermissionHandler();
-  @observable
-  bool? isMediaAccessOkay;
-  @observable
-  File? video;
-  @observable
-  bool isPlaying = false;
-  @observable
+  File? cameraVideo;
+
   VideoPlayerController? videoPlayerController;
 
-  @action
-  Future pickVideo() async {
+  pickVideo() async {
     var pickedFile = await picker.pickVideo(source: ImageSource.gallery);
 
     video = File(pickedFile!.path);
@@ -35,23 +28,30 @@ abstract class _UploadVideo with Store {
       ..initialize().then((_) {
         videoPlayerController!.play();
         isPlaying = true;
+        notify();
       });
+    notify();
   }
 
-  @action
   playOrPause() {
     if (videoPlayerController!.value.isPlaying) {
       videoPlayerController!.pause();
       isPlaying = false;
+      notify();
     } else {
       videoPlayerController!.play();
       isPlaying = true;
+      notify();
     }
   }
 
-  @action
   Future<void> checkVideoPermission() async {
     isMediaAccessOkay = await permissionHandler.checkCamera();
     print('MediaOkey: $isMediaAccessOkay');
+    notify();
+  }
+
+  notify() {
+    notifyListeners();
   }
 }
