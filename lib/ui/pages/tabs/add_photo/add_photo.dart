@@ -10,7 +10,7 @@ import 'package:miksoper/core/helpers/mobxs/upload_images/upload_image.dart';
 import 'package:miksoper/core/repositories/mix_life_cycle.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import 'save_img.dart';
+import 'save_image/save_img.dart';
 
 class AddPhotoPage extends StatefulWidget {
   const AddPhotoPage({super.key});
@@ -45,11 +45,7 @@ class _AddPhotoPageState extends State<AddPhotoPage>
                         File(uploadImage.image!.path),
                         fit: BoxFit.cover,
                       ))
-                  : Container(
-                      width: 100,
-                      height: 100,
-                      color: Colors.amber,
-                    ),
+                  : const SizedBox(),
               GestureDetector(
                 onTap: () async {
                   uploadImage.isMediaAccessOkay

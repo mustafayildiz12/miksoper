@@ -23,6 +23,10 @@ abstract class _UploadVideo with Store {
   @observable
   bool isPlaying = false;
   @observable
+  int captionOfset = 0;
+  @observable
+  double videoSpeed = 1;
+  @observable
   VideoPlayerController? videoPlayerController;
 
   @action
@@ -36,6 +40,18 @@ abstract class _UploadVideo with Store {
         videoPlayerController!.play();
         isPlaying = true;
       });
+  }
+
+  @action
+  setCaptionDuration(Duration delay) {
+    videoPlayerController!.setCaptionOffset(delay);
+    captionOfset = videoPlayerController!.value.captionOffset.inMilliseconds;
+  }
+
+  @action
+  setPlaybackSpeed(double speed) {
+    videoPlayerController!.setPlaybackSpeed(speed);
+    videoSpeed = videoPlayerController!.value.playbackSpeed;
   }
 
   @action

@@ -56,6 +56,38 @@ mixin _$UploadVideo on _UploadVideo, Store {
     });
   }
 
+  late final _$captionOfsetAtom =
+      Atom(name: '_UploadVideo.captionOfset', context: context);
+
+  @override
+  int get captionOfset {
+    _$captionOfsetAtom.reportRead();
+    return super.captionOfset;
+  }
+
+  @override
+  set captionOfset(int value) {
+    _$captionOfsetAtom.reportWrite(value, super.captionOfset, () {
+      super.captionOfset = value;
+    });
+  }
+
+  late final _$videoSpeedAtom =
+      Atom(name: '_UploadVideo.videoSpeed', context: context);
+
+  @override
+  double get videoSpeed {
+    _$videoSpeedAtom.reportRead();
+    return super.videoSpeed;
+  }
+
+  @override
+  set videoSpeed(double value) {
+    _$videoSpeedAtom.reportWrite(value, super.videoSpeed, () {
+      super.videoSpeed = value;
+    });
+  }
+
   late final _$videoPlayerControllerAtom =
       Atom(name: '_UploadVideo.videoPlayerController', context: context);
 
@@ -94,6 +126,28 @@ mixin _$UploadVideo on _UploadVideo, Store {
       ActionController(name: '_UploadVideo', context: context);
 
   @override
+  dynamic setCaptionDuration(Duration delay) {
+    final _$actionInfo = _$_UploadVideoActionController.startAction(
+        name: '_UploadVideo.setCaptionDuration');
+    try {
+      return super.setCaptionDuration(delay);
+    } finally {
+      _$_UploadVideoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setPlaybackSpeed(double speed) {
+    final _$actionInfo = _$_UploadVideoActionController.startAction(
+        name: '_UploadVideo.setPlaybackSpeed');
+    try {
+      return super.setPlaybackSpeed(speed);
+    } finally {
+      _$_UploadVideoActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic playOrPause() {
     final _$actionInfo = _$_UploadVideoActionController.startAction(
         name: '_UploadVideo.playOrPause');
@@ -110,6 +164,8 @@ mixin _$UploadVideo on _UploadVideo, Store {
 isMediaAccessOkay: ${isMediaAccessOkay},
 video: ${video},
 isPlaying: ${isPlaying},
+captionOfset: ${captionOfset},
+videoSpeed: ${videoSpeed},
 videoPlayerController: ${videoPlayerController}
     ''';
   }

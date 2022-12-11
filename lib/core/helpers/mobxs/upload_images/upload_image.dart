@@ -15,6 +15,7 @@ abstract class _UploadImageMobx with Store {
   @observable
   XFile? image;
   bool isMediaAccessOkay = false;
+  bool isPlaying = false;
 
   @action
   getImage() async {
@@ -27,4 +28,5 @@ abstract class _UploadImageMobx with Store {
     isMediaAccessOkay = await permissionHandler.checkCamera();
     print('MediaOkey: $isMediaAccessOkay');
   }
+  
 }
