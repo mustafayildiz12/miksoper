@@ -50,7 +50,7 @@ class _ControlsOverlayState extends State<_ControlsOverlay> {
                 backgroundColor: Colors.black54,
                 radius: 7.w,
                 child: Icon(
-                  widget.uploadVideo.isPlaying
+                  widget.uploadVideo.isPlaying 
                       ? Icons.pause_outlined
                       : Icons.play_arrow,
                   color: Colors.white70,

@@ -28,10 +28,25 @@ abstract class _UploadVideo with Store {
   double videoSpeed = 1;
   @observable
   VideoPlayerController? videoPlayerController;
+  @observable
+  bool isVideoEnd = false;
 
   @action
   Future pickVideo() async {
     var pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+
+    video = File(pickedFile!.path);
+
+    videoPlayerController = VideoPlayerController.file(video!)
+      ..initialize().then((_) {
+        videoPlayerController!.play();
+        isPlaying = true;
+      });
+  }
+
+  @action
+  Future pickVideoFromCamera() async {
+    var pickedFile = await picker.pickVideo(source: ImageSource.camera);
 
     video = File(pickedFile!.path);
 
@@ -52,6 +67,11 @@ abstract class _UploadVideo with Store {
   setPlaybackSpeed(double speed) {
     videoPlayerController!.setPlaybackSpeed(speed);
     videoSpeed = videoPlayerController!.value.playbackSpeed;
+  }
+
+  @action
+  disposeVideo() {
+    videoPlayerController?.dispose();
   }
 
   @action

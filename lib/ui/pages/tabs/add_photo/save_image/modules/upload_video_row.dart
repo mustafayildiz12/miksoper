@@ -15,6 +15,14 @@ class _UploadVideoRow extends StatefulWidget {
 class _UploadVideoRowState extends State<_UploadVideoRow>
     with WidgetsBindingObserver, LifeCycleUse {
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    widget.uploadVideo.disposeVideo();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
   Widget build(BuildContext context) {
     /*
     final UploadVideoProvider uploadVideoProvider =
@@ -65,7 +73,11 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
                             MyColors().colorAccentDark),
                       ),
                       onPressed: () async {
-                        widget.uploadVideo.pickVideo();
+                        _VideoOption(
+                          uploadVideo: widget.uploadVideo,
+                        ).show(context);
+
+                        //   widget.uploadVideo.pickVideo();
                       },
                       child: const Text('Video Yükle'),
                     ),
@@ -83,5 +95,44 @@ class _UploadVideoRowState extends State<_UploadVideoRow>
     */
 
     widget.uploadVideo.checkVideoPermission();
+  }
+}
+
+class _VideoOption extends StatelessWidget {
+  const _VideoOption({required this.uploadVideo, Key? key}) : super(key: key);
+  final UploadVideo uploadVideo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          onTap: () {
+            uploadVideo.pickVideo();
+            Navigator.pop(context);
+          },
+          title: const Text("Galeri"),
+          trailing: const Icon(Icons.photo),
+        ),
+        ListTile(
+          onTap: () {
+            uploadVideo.pickVideoFromCamera();
+            Navigator.pop(context);
+          },
+          title: const Text("Kamera"),
+          trailing: Icon(Icons.photo_camera),
+        ),
+      ],
+    );
+  }
+}
+
+extension VideoOptionExtension on _VideoOption {
+  show(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => this,
+    );
   }
 }
